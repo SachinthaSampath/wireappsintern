@@ -5,12 +5,12 @@ const fs = require("fs");
 //send all the user data as json
 router.get("/", (req, res) => {
   //read users from json file
+  let users = getUsersFromFile();
+
   let result = [];
-  let rawdata = fs.readFileSync("./data/user.json");
-  let student = JSON.parse(rawdata);
 
   //loop through each element to find whether deleted
-  student.forEach((element) => {
+  users.forEach((element) => {
     if (element.deleted == 0) {
       result.push(element);
     }
@@ -26,7 +26,7 @@ router.get("/new", (req, res) => {
     username: "",
     password: "",
     role: "",
-    active: "",
+    active: "checked",
     deleted: 0,
   });
 });
@@ -45,7 +45,7 @@ router.post("/", (req, res) => {
     username: req.body.username,
     password: req.body.password,
     role: req.body.role,
-    active: req.body.active == "checked" ? 1 : 0,
+    active: req.body.active == "on" ? 1 : 0,
   };
 
   //appedn to user arrray
@@ -58,8 +58,72 @@ router.post("/", (req, res) => {
   res.redirect(`/user/${users.length}`);
 });
 
+//update user
+router.post("/update/:id", (req, res) => {
+  //update user
+  //read the user list
+  let users = getUsersFromFile();
+  //user ID to find
+  let findId = req.params.id;
+  //user to update
+  let updateUser;
+  //loop through users
+  users.forEach((u) => {
+    if (u.id == findId && u.deleted == 0) {
+      //found user
+      updateUser = u;
+      return;
+    }
+  });
+
+  if (updateUser) { 
+    //found user and update fields
+    if (req.body.name) updateUser.name = req.body.name;
+    if (req.body.username) updateUser.username = req.body.username;
+    if (req.body.password) updateUser.password = req.body.password;
+    if (req.body.role) updateUser.role = req.body.role;
+    if (req.body.active) updateUser.active = req.body.active;
+
+    //stringify data
+    let data = JSON.stringify(users, null, 2);
+    fs.writeFileSync("./data/user.json", data);
+
+    //redirect
+    res.redirect(`/user/${updateUser.id}`);
+  } else {
+    //unable to find user
+    res.send("Unable to find user");
+  }
+});
+
 //user login
-router.post("/login", (req, res, next) => {});
+router.post("/login", (req, res, next) => {
+  //read users from json file
+  let users = getUsersFromFile();
+  //login credentials
+  let username = req.body.username;
+  let password = req.body.password;
+  //status flag
+  let loginSuccess = false;
+  //loop through each element to find user with username
+  users.forEach((element) => {
+    if (
+      element.username == username &&
+      element.password == password &&
+      element.active == 1 &&
+      element.deleted == 0
+    ) {
+      loginSuccess = true;
+      return;
+    }
+  });
+  //finalize with flag
+  if (loginSuccess) {
+    res.status(200).send("Login Success!");
+  } else {
+    res.status(200).send("Login Failed!");
+  }
+});
 
 //default routes
 router
@@ -67,28 +131,37 @@ router
   .get((req, res, next) => {
     //show user with a specific id
     let id = req.params.id;
-    //read the user list synchronous
-    let rawdata = fs.readFileSync("./data/user.json");
-    let users = JSON.parse(rawdata);
-    users.array.forEach((element) => {
-      if (element.id == id) {
+    //read the user list
+    let users = getUsersFromFile();
+    //status flag
+    let userFound = false;
+    //loop through users
+    users.forEach((element) => {
+      //find user with id and not deleted
+      if (element.id == id && element.deleted == 0) {
+        //show user
+        userFound = true;
         res.status(200).json(element);
         return;
       }
     });
-    res.status(200).json({});
+    //send error
+    if (!userFound)
+      res.status(200).send("Unable to find a user with the given id!");
   })
+
   .put((req, res, next) => {})
+
   .delete((req, res, next) => {
-    //*********** check *******/
     //delete user with id
     let id = req.params.id;
-    //read the user list synchronous
-    let rawdata = fs.readFileSync("./data/user.json");
-    let users = JSON.parse(rawdata);
-    users.array.forEach((element) => {
+    //read the user list
+    let users = getUsersFromFile();
+    //loop through users
+    users.forEach((element) => {
       if (element.id == id) {
-        element.delete = 1;
+        element.deleted = 1;
+        return;
       }
     });
 
@@ -96,21 +169,13 @@ router
     let data = JSON.stringify(users, null, 2);
     fs.writeFileSync("./data/user.json", data);
 
-    res.status(200).json({});
+    res.status(200).send("Successfully deleted!");
   });
 
+//helper function to read users from the file
+const getUsersFromFile = () => {
+  let rawdata = fs.readFileSync("./data/user.json");
+  return JSON.parse(rawdata);
+};
+
 module.exports = router;
-
-//res.status(200).json(userCount);
-
-//read the user list asynchronous
-//   fs.readFile("./data/user.json",(err,data)=>{
-//     if(err){
-//         throw err;
-//     }else{
-//         let students = JSON.parse(data);
-//         console.log(students);
-//         res.send(students);
-//     }
-//   })
-//console.log("This is after call");

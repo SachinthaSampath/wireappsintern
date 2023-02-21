@@ -23,12 +23,7 @@ app.use("/customer",customerRouter);
 
 //set medicine router
 const medicineRouter = require("./routes/medicine");
-// app.use("/medicine",medicineRouter);
+app.use("/medicine",medicineRouter);
 
-
-
-// let rawdata = fs.readFileSync('./data/user.json');
-// let student = JSON.parse(rawdata);
-// console.log(student);
 
 app.listen(3000);

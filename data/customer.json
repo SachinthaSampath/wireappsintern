@@ -1,14 +1,37 @@
 [
-    {
-        "id":1,
-        "name":"sachintha",
-        "address":"",
-        "nic":"",
-        "dob":"",
-        "regdate":"",
-        "telephone":"",
-        "job":"",
-        "active":1,
-        "deleted":0
-    }
+  {
+    "id": 1,
+    "name": "sachintha",
+    "address": "",
+    "nic": "",
+    "dob": "",
+    "regtime": "",
+    "telephone": "",
+    "job": "",
+    "active": 1,
+    "deleted": 1
+  },
+  {
+    "id": 2,
+    "name": "sachintha sampath",
+    "address": "100",
+    "nic": "951222100v",
+    "dob": "",
+    "telephone": "+94703028993",
+    "job": "Lecturer",
+    "active": 0,
+    "deleted": 0
+  },
+  {
+    "id": 4,
+    "name": "sachintha ",
+    "address": "101",
+    "nic": "951222100V",
+    "dob": "2022-01-03",
+    "telephone": "0782320232",
+    "job": "Lecturer/",
+    "active": 1,
+    "deleted": 1,
+    "delete": 1
+  }
 ]
