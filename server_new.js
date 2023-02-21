@@ -19,7 +19,7 @@ app.use("/user",userRouter);
 
 //set customer router
 const customerRouter = require("./routes/customer");
-// app.use("/customer",customerRouter);
+app.use("/customer",customerRouter);
 
 //set medicine router
 const medicineRouter = require("./routes/medicine");

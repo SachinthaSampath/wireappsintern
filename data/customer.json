@@ -1,0 +1,14 @@
+[
+    {
+        "id":1,
+        "name":"sachintha",
+        "address":"",
+        "nic":"",
+        "dob":"",
+        "regdate":"",
+        "telephone":"",
+        "job":"",
+        "active":1,
+        "deleted":0
+    }
+]
