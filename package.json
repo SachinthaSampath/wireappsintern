@@ -1,0 +1,34 @@
+{
+  "name": "wireappsintern",
+  "version": "1.0.0",
+  "description": "This is creates as the backend technical test given by wireapps ",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "devStart": "nodemon server.js",
+    "start":"nodemon server_new.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SachinthaSampath/wireappsintern.git"
+  },
+  "keywords": [
+    "wireapps",
+    "internship",
+    "backend",
+    "node"
+  ],
+  "author": "sachintha sampath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SachinthaSampath/wireappsintern/issues"
+  },
+  "homepage": "https://github.com/SachinthaSampath/wireappsintern#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

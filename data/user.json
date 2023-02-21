@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "sachintha",
+    "username": "admin",
+    "password": "123",
+    "role": "admin",
+    "active": 1,
+    "deleted": 0
+  },
+  {
+    "id": 2,
+    "name": "",
+    "username": "",
+    "password": "",
+    "role": "",
+    "active": 0,
+    "deleted": 0
+  },
+  {
+    "id": 3,
+    "name": "",
+    "username": "",
+    "password": "",
+    "role": "",
+    "active": 0,
+    "deleted": 0
+  },
+  {
+    "id": 4,
+    "name": "",
+    "username": "",
+    "password": "",
+    "role": "",
+    "active": 0,
+    "deleted": 0
+  }
+]

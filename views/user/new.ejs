@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New User</title>
+  </head>
+  <body>
+    <form action="/user" method="post">
+      <p>
+        <label>ID</label>
+        <input type="text" name="id" disabled />
+      </p>
+      <p>
+        <label>Name</label>
+        <input type="text" name="name" value="<%= locals.name %>" />
+      </p>
+      <p>
+        <label>Username</label>
+        <input type="text" name="username" value="<%= locals.username %>" />
+      </p>
+      <p>
+        <label>Password</label>
+        <input type="password" name="password" value="<%= locals.password %>" />
+      </p>
+      <p>
+        <label>Role</label>
+        <input type="text" name="role" value="<%= locals.role %>" />
+      </p>
+      <p>
+        <label>Active</label>
+        <input type="checkbox" name="role" value="<%= locals.role %>" />
+      </p>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
