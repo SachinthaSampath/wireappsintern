@@ -99,11 +99,13 @@ router.post("/update/:id", (req, res) => {
 
 //user login
 router.post("/login", (req, res, next) => {
+  
   //read users from json file
   let users = getUsersFromFile();
   //login credentials
   let username = req.body.username;
   let password = req.body.password;
+  
   //status flag
   let loginSuccess = false;
   //loop through each element to find user with username
@@ -113,12 +115,13 @@ router.post("/login", (req, res, next) => {
       element.password == password &&
       element.active == 1 &&
       element.deleted == 0
-    ) {
+      ) {
       loginSuccess = true;
       req.session.loggedInUser = JSON.stringify(element);
       return;
     }
   });
+  
   //finalize with flag
   if (loginSuccess) {
     res.status(200).send("Login Success!");

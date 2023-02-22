@@ -1,17 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "sachintha",
-    "address": "",
-    "nic": "",
-    "dob": "",
-    "regtime": "",
-    "telephone": "",
-    "job": "",
-    "active": 1,
-    "deleted": 0
-  },
-  {
     "id": 2,
     "name": "sachintha sampath",
     "address": "100",
@@ -19,7 +7,7 @@
     "dob": "",
     "telephone": "+9470302899",
     "job": "Lecturer",
-    "active": 0,
+    "active": 1,
     "deleted": 0
   }
 ]

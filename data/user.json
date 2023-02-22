@@ -13,8 +13,8 @@
     "name": "test",
     "username": "test",
     "password": "123",
-    "role": "",
-    "active": 0,
+    "role": "owner",
+    "active": 1,
     "deleted": 0
   },
   {
@@ -23,7 +23,7 @@
     "username": "",
     "password": "",
     "role": "cashier",
-    "active": 0,
+    "active": 1,
     "deleted": 0
   }
 ]

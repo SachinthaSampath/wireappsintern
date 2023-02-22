@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
-//send all the customer data as json
+//send all the customer data as json - all users
 router.get("/", (req, res) => {
   //read customers from json file
   let result = [];
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
   res.status(200).json(result);
 });
 
-//search customers
+//search customers - all users
 router.get("/search/:term", (req, res) => {
   //read customers from json file
   let result = [];
@@ -34,8 +34,15 @@ router.get("/search/:term", (req, res) => {
   res.status(200).json(result);
 });
 
-//create customer form
+//create customer form - owner
 router.get("/new", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //show customer form
   res.render("customer/new", {
     id: "",
@@ -53,6 +60,13 @@ router.get("/new", (req, res) => {
 
 //create customer
 router.post("/", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //read the customer list
   let customers = getCustomersFromFile();
   //current customer count
@@ -86,6 +100,13 @@ router.post("/", (req, res) => {
 
 //update customer form
 router.get("/update/:id", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner" || userRole == "manager"|| userRole == "cashier")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //read customers
   let customers = getCustomersFromFile();
   //customer ID to find
@@ -105,6 +126,13 @@ router.get("/update/:id", (req, res) => {
 
 //update customer
 router.post("/update/:id", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner" || userRole == "manager"|| userRole == "cashier")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //update customer
   //read the customer list
   let customers = getCustomersFromFile();
@@ -145,6 +173,13 @@ router.post("/update/:id", (req, res) => {
 
 //delete customer with post request (permanent delete)
 router.post("/delete/:id", (req, res) => {
+   //check user permission
+   let userRole = getUserRole(req); 
+   if (!(userRole == "owner")) {
+     res.status(200).send("You don't have permission for this!");
+     return;
+   }
+
   //delete customer with id
   let id = req.params.id;
   //read the customer list
@@ -197,6 +232,14 @@ router
   .put((req, res, next) => {})
   .delete((req, res, next) => {
     //delte customer with delete request (soft delete)
+
+    //check user permission
+    let userRole = getUserRole(req); 
+    if (!(userRole == "owner" || userRole == "manager")) {
+      res.status(200).send("You don't have permission for this!");
+      return;
+    }
+
     let id = req.params.id;
     //status flag
     let found = false;
@@ -223,6 +266,7 @@ const getCustomersFromFile = () => {
   let rawdata = fs.readFileSync("./data/customer.json");
   return JSON.parse(rawdata);
 };
+
 //function to get logged in user role
 const getUserRole = (req) => {
   if (req.session.loggedInUser) {

@@ -36,6 +36,13 @@ router.get("/search/:term", (req, res) => {
 
 //create medicine form
 router.get("/new", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //show medicine form
   res.render("medicine/new", {
     id: "",
@@ -51,6 +58,13 @@ router.get("/new", (req, res) => {
 
 //create medicine
 router.post("/", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //read the medicine list
   let medicines = getMedicinesFromFile();
   //current medicine count
@@ -83,6 +97,13 @@ router.post("/", (req, res) => {
 
 //update medicine form
 router.get("/update/:id", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner" || userRole == "manager"|| userRole == "cashier")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //read medicines
   let medicines = getMedicinesFromFile();
   //medicine ID to find
@@ -106,6 +127,13 @@ router.get("/update/:id", (req, res) => {
 
 //update medicine
 router.post("/update/:id", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner" || userRole == "manager"|| userRole == "cashier")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //update medicine
   //read the medicine list
   let medicines = getMedicinesFromFile();
@@ -146,6 +174,13 @@ router.post("/update/:id", (req, res) => {
 
 //delete medicine with post request (permanent delete)
 router.post("/delete/:id", (req, res) => {
+  //check user permission
+  let userRole = getUserRole(req); 
+  if (!(userRole == "owner")) {
+    res.status(200).send("You don't have permission for this!");
+    return;
+  }
+
   //delete medicine with id
   let id = req.params.id;
   //read the medicine list
@@ -180,7 +215,7 @@ router.post("/delete/:id", (req, res) => {
 router
   .route("/:id")
   .get((req, res, next) => {
-    console.log(getUserRole(req));
+    
     //show medicine with a specific id
     let id = req.params.id;
     //read the medicine list
@@ -201,6 +236,14 @@ router
   .put((req, res, next) => {})
   .delete((req, res, next) => {
     //delte medicine with delete request (soft delete)
+
+    //check user permission
+    let userRole = getUserRole(req); 
+    if (!(userRole == "owner" || userRole == "manager")) {
+      res.status(200).send("You don't have permission for this!");
+      return;
+    }
+    
     let id = req.params.id;
     //status flag
     let found = false;
@@ -217,9 +260,9 @@ router
       //stringify data
       let data = JSON.stringify(medicines, null, 2);
       fs.writeFileSync("./data/medicine.json", data);
-      res.send("Successfully deleted!");
+      res.status(200).send("Successfully deleted!");
     } else {
-      res.send("Unable to find medicine!");
+      res.status(200).send("Unable to find medicine!");
     }
   });
 
