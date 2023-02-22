@@ -11,8 +11,8 @@
   {
     "id": 2,
     "name": "test",
-    "username": "",
-    "password": "",
+    "username": "test",
+    "password": "123",
     "role": "",
     "active": 0,
     "deleted": 0
@@ -22,7 +22,7 @@
     "name": "",
     "username": "",
     "password": "",
-    "role": "",
+    "role": "cashier",
     "active": 0,
     "deleted": 0
   }

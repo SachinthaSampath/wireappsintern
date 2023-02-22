@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
@@ -114,6 +115,7 @@ router.post("/login", (req, res, next) => {
       element.deleted == 0
     ) {
       loginSuccess = true;
+      req.session.loggedInUser = JSON.stringify(element);
       return;
     }
   });
@@ -181,6 +183,16 @@ router
 const getUsersFromFile = () => {
   let rawdata = fs.readFileSync("./data/user.json");
   return JSON.parse(rawdata);
+};
+
+//function to get logged in user role
+const getUserRole = (req) => {
+  if (req.session.loggedInUser) {
+    let user = JSON.parse(req.session.loggedInUser);
+    return user.role;
+  } else {
+    return "guest";
+  }
 };
 
 module.exports = router;

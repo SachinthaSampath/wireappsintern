@@ -223,5 +223,14 @@ const getCustomersFromFile = () => {
   let rawdata = fs.readFileSync("./data/customer.json");
   return JSON.parse(rawdata);
 };
+//function to get logged in user role
+const getUserRole = (req) => {
+  if (req.session.loggedInUser) {
+    let user = JSON.parse(req.session.loggedInUser);
+    return user.role;
+  } else {
+    return "guest";
+  }
+};
 
 module.exports = router;

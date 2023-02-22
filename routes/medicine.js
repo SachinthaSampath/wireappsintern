@@ -180,6 +180,7 @@ router.post("/delete/:id", (req, res) => {
 router
   .route("/:id")
   .get((req, res, next) => {
+    console.log(getUserRole(req));
     //show medicine with a specific id
     let id = req.params.id;
     //read the medicine list
@@ -227,5 +228,13 @@ const getMedicinesFromFile = () => {
   let rawdata = fs.readFileSync("./data/medicine.json");
   return JSON.parse(rawdata);
 };
-
+//function to get logged in user role
+const getUserRole = (req) => {
+  if (req.session.loggedInUser) {
+    let user = JSON.parse(req.session.loggedInUser);
+    return user.role;
+  } else {
+    return "guest";
+  }
+};
 module.exports = router;
