@@ -40,21 +40,19 @@ router.get("/new", (req, res) => {
   res.render("medicine/new", {
     id: "",
     name: "",
-    address: "",
-    nic: "",
-    dob: "",
-    regdate: "",
-    telephone: "",
-    job: "",
-    active: "checked",
-    deleted: 0,
+    description: "",
+    qty: "",
+    supplier: "",
+    dosage: "",
+    mfd: "",
+    exp: "",
   });
 });
 
 //create medicine
 router.post("/", (req, res) => {
   //read the medicine list
-  let medicines = getmedicinesFromFile();
+  let medicines = getMedicinesFromFile();
   //current medicine count
   let medicineCount = medicines.length;
   //new medicine id
@@ -63,13 +61,12 @@ router.post("/", (req, res) => {
   let newmedicine = {
     id: newId,
     name: req.body.name,
-    address: req.body.address,
-    nic: req.body.nic,
-    dob: req.body.dob,
-    regtime: req.body.regtime,
-    telephone: req.body.telephone,
-    job: req.body.job,
-    active: req.body.active == "on" ? 1 : 0,
+    description: req.body.description,
+    qty: req.body.qty,
+    supplier: req.body.supplier,
+    dosage: req.body.dosage,
+    mfd: req.body.mfd,
+    exp: req.body.exp,
     deleted: 0,
   };
 
@@ -87,27 +84,31 @@ router.post("/", (req, res) => {
 //update medicine form
 router.get("/update/:id", (req, res) => {
   //read medicines
-  let medicines = getmedicinesFromFile();
+  let medicines = getMedicinesFromFile();
   //medicine ID to find
   let findId = req.params.id;
-
+  //status flag
+  let found = false;
   //loop through medicines
   medicines.forEach((c) => {
     if (c.id == findId && c.deleted == 0) {
       //found medicine
       res.render("medicine/update", c);
+      found = true;
       return;
     }
   });
-  //medicine with ID not found
-  res.send("Invalid medicine ID");
+  if (!found) {
+    //medicine with ID not found
+    res.send("Invalid medicine ID");
+  }
 });
 
 //update medicine
 router.post("/update/:id", (req, res) => {
   //update medicine
   //read the medicine list
-  let medicines = getmedicinesFromFile();
+  let medicines = getMedicinesFromFile();
 
   //medicine ID to find
   let findId = req.params.id;
@@ -124,12 +125,12 @@ router.post("/update/:id", (req, res) => {
   if (updatemedicine) {
     //found medicine
     updatemedicine.name = req.body.name;
-    updatemedicine.address = req.body.address;
-    updatemedicine.nic = req.body.nic;
-    updatemedicine.dob = req.body.dob;
-    updatemedicine.telephone = req.body.telephone;
-    updatemedicine.job = req.body.job;
-    updatemedicine.active = req.body.active == "on" ? 1 : 0;
+    updatemedicine.description = req.body.description;
+    updatemedicine.qty = req.body.qty;
+    updatemedicine.supplier = req.body.supplier;
+    updatemedicine.dosage = req.body.dosage;
+    updatemedicine.mfd = req.body.mfd;
+    updatemedicine.exp = req.body.exp;
 
     //stringify data
     let data = JSON.stringify(medicines, null, 2);
@@ -148,7 +149,7 @@ router.post("/delete/:id", (req, res) => {
   //delete medicine with id
   let id = req.params.id;
   //read the medicine list
-  let medicines = getmedicinesFromFile();
+  let medicines = getMedicinesFromFile();
   //final medicine list
   let writeList = [];
   //status flag
@@ -168,10 +169,10 @@ router.post("/delete/:id", (req, res) => {
   //write finalized medicine list
   fs.writeFileSync("./data/medicine.json", data);
 
-  if(found){
-      res.send("Successfully deleted!");
-    }else{
-      res.send("Unable to find medicine!");
+  if (found) {
+    res.send("Successfully deleted!");
+  } else {
+    res.send("Unable to find medicine!");
   }
 });
 
@@ -181,34 +182,44 @@ router
   .get((req, res, next) => {
     //show medicine with a specific id
     let id = req.params.id;
-    //read the medicine list synchronous
-
+    //read the medicine list
     let medicines = getMedicinesFromFile();
+    //status flage
+    let found = false;
     medicines.forEach((element) => {
       if (element.id == id && element.deleted == 0) {
         res.status(200).json(element);
+        found = true;
         return;
       }
     });
-    res.status(200).json({});
+    if (!found) {
+      res.status(200).json({});
+    }
   })
   .put((req, res, next) => {})
   .delete((req, res, next) => {
     //delte medicine with delete request (soft delete)
     let id = req.params.id;
+    //status flag
+    let found = false;
     //read the medicine list
     let medicines = getMedicinesFromFile();
     medicines.forEach((element) => {
       if (element.id == id) {
         element.deleted = 1;
+        found = true;
+        return;
       }
     });
-
-    //stringify data
-    let data = JSON.stringify(medicines, null, 2);
-    fs.writeFileSync("./data/medicine.json", data);
-
-    res.send("Successfully deleted!");
+    if (found) {
+      //stringify data
+      let data = JSON.stringify(medicines, null, 2);
+      fs.writeFileSync("./data/medicine.json", data);
+      res.send("Successfully deleted!");
+    } else {
+      res.send("Unable to find medicine!");
+    }
   });
 
 //helper function to read medicines from the file

@@ -9,7 +9,7 @@
     "telephone": "",
     "job": "",
     "active": 1,
-    "deleted": 1
+    "deleted": 0
   },
   {
     "id": 2,
@@ -17,21 +17,9 @@
     "address": "100",
     "nic": "951222100v",
     "dob": "",
-    "telephone": "+94703028993",
+    "telephone": "+9470302899",
     "job": "Lecturer",
     "active": 0,
     "deleted": 0
-  },
-  {
-    "id": 4,
-    "name": "sachintha ",
-    "address": "101",
-    "nic": "951222100V",
-    "dob": "2022-01-03",
-    "telephone": "0782320232",
-    "job": "Lecturer/",
-    "active": 1,
-    "deleted": 1,
-    "delete": 1
   }
 ]

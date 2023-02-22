@@ -1,13 +1,54 @@
 [
-    {
-        "id":1,
-        "name":"piriton",
-        "description":"",
-        "qty":0,
-        "supplier":"",
-        "dosage":"",
-        "mfd":"",
-        "exp":"",
-        "deleted":0
-    }
+  {
+    "id": 1,
+    "name": "piriton",
+    "description": "",
+    "qty": 0,
+    "supplier": "",
+    "dosage": "",
+    "mfd": "",
+    "exp": "",
+    "deleted": 1
+  },
+  {
+    "id": 2,
+    "name": "Paracitamol",
+    "description": "Pain killer",
+    "qty": "100",
+    "dosage": "3x1",
+    "mfd": "2023-02-15",
+    "exp": "2023-03-03",
+    "deleted": 0
+  },
+  {
+    "id": 3,
+    "name": "Amoxillin",
+    "description": "antibiotics",
+    "qty": "430",
+    "dosage": "N/A",
+    "mfd": "",
+    "exp": "",
+    "deleted": 0
+  },
+  {
+    "id": 4,
+    "name": "Amoxillin",
+    "description": "antibiotics",
+    "qty": "430",
+    "dosage": "N/A",
+    "mfd": "",
+    "exp": "",
+    "deleted": 0
+  },
+  {
+    "id": 5,
+    "name": "Other",
+    "description": "Test",
+    "qty": "500",
+    "supplier": "N/A",
+    "dosage": "N/A",
+    "mfd": "2023-02-24",
+    "exp": "2023-03-09",
+    "deleted": 0
+  }
 ]

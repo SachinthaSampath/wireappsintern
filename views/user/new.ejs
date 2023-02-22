@@ -30,7 +30,7 @@
       </p>
       <p>
         <label>Active</label>
-        <input type="checkbox" name="role" <%= locals.active %> />
+        <input type="checkbox" name="role" <%= locals.active=='1'?'checked':'' %> />
       </p>
       <button type="submit">Submit</button>
     </form>

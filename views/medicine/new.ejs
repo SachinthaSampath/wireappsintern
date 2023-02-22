@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Medicine</title>
+  </head>
+  <body> 
+       
+    <form action="/medicine" method="post">
+      <p>
+        <label>ID</label>
+        <input type="text" name="id" disabled value="<%= locals.id %>"/>
+      </p> 
+      <p>
+        <label>Name</label>
+        <input type="text" name="name" value="<%= locals.name %>" />
+      </p>
+      <p>
+        <label>Description</label>
+        <input type="text" name="description" value="<%= locals.description %>" />
+      </p>
+      <p>
+        <label>QTY</label>
+        <input type="number" name="qty" value="<%= locals.qty %>" />
+      </p>
+      <p>
+        <label>Supplier</label>
+        <input type="text" name="supplier" value="<%= locals.supplier %>" />
+      </p>
+      <p>
+        <label>Dosage</label>
+        <input type="text" name="dosage" value="<%= locals.dosage %>" />
+      </p>
+      <p>
+        <label>MFD</label>
+        <input type="date" name="mfd" value="<%= locals.mfd %>" />
+      </p>
+      <p>
+        <label>EXP</label>
+        <input type="date" name="exp" value="<%= locals.exp %>" />
+      </p> 
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

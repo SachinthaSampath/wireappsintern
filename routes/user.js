@@ -26,7 +26,7 @@ router.get("/new", (req, res) => {
     username: "",
     password: "",
     role: "",
-    active: "checked",
+    active: "1",
     deleted: 0,
   });
 });
@@ -76,7 +76,7 @@ router.post("/update/:id", (req, res) => {
     }
   });
 
-  if (updateUser) { 
+  if (updateUser) {
     //found user and update fields
     if (req.body.name) updateUser.name = req.body.name;
     if (req.body.username) updateUser.username = req.body.username;
@@ -155,21 +155,26 @@ router
   .delete((req, res, next) => {
     //delete user with id
     let id = req.params.id;
+    //status flag
+    let found = false;
     //read the user list
     let users = getUsersFromFile();
     //loop through users
     users.forEach((element) => {
       if (element.id == id) {
         element.deleted = 1;
+        found = true;
         return;
       }
     });
-
-    //stringify data
-    let data = JSON.stringify(users, null, 2);
-    fs.writeFileSync("./data/user.json", data);
-
-    res.status(200).send("Successfully deleted!");
+    if (found) {
+      //stringify data
+      let data = JSON.stringify(users, null, 2);
+      fs.writeFileSync("./data/user.json", data);
+      res.status(200).send("Successfully deleted!");
+    } else {
+      res.send("Unable to find user!");
+    }
   });
 
 //helper function to read users from the file

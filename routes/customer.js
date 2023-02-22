@@ -168,10 +168,10 @@ router.post("/delete/:id", (req, res) => {
   //write finalized customer list
   fs.writeFileSync("./data/customer.json", data);
 
-  if(found){
-      res.send("Successfully deleted!");
-    }else{
-      res.send("Unable to find customer!");
+  if (found) {
+    res.send("Successfully deleted!");
+  } else {
+    res.send("Unable to find customer!");
   }
 });
 
@@ -181,34 +181,41 @@ router
   .get((req, res, next) => {
     //show customer with a specific id
     let id = req.params.id;
-    //read the customer list synchronous
-
+    //read the customer list
     let customers = getCustomersFromFile();
+    //status flag
+    let found = false;
     customers.forEach((element) => {
       if (element.id == id && element.deleted == 0) {
         res.status(200).json(element);
+        found = true;
         return;
       }
     });
-    res.status(200).json({});
+    if (!found) res.status(200).json({});
   })
   .put((req, res, next) => {})
   .delete((req, res, next) => {
     //delte customer with delete request (soft delete)
     let id = req.params.id;
+    //status flag
+    let found = false;
     //read the customer list
     let customers = getCustomersFromFile();
     customers.forEach((element) => {
       if (element.id == id) {
         element.deleted = 1;
+        found = true;
       }
     });
-
-    //stringify data
-    let data = JSON.stringify(customers, null, 2);
-    fs.writeFileSync("./data/customer.json", data);
-
-    res.send("Successfully deleted!");
+    if (found) {
+      //stringify data
+      let data = JSON.stringify(customers, null, 2);
+      fs.writeFileSync("./data/customer.json", data);
+      res.send("Successfully deleted!");
+    } else {
+      res.send("Unable to find customer!");
+    }
   });
 
 //helper function to read customers from the file
