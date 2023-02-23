@@ -4,7 +4,7 @@
     "name": "sachintha",
     "username": "admin",
     "password": "123",
-    "role": "admin",
+    "role": "owner",
     "active": 1,
     "deleted": 0
   },
@@ -14,15 +14,6 @@
     "username": "test",
     "password": "123",
     "role": "owner",
-    "active": 1,
-    "deleted": 0
-  },
-  {
-    "id": 3,
-    "name": "",
-    "username": "",
-    "password": "",
-    "role": "cashier",
     "active": 1,
     "deleted": 0
   }

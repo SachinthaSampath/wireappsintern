@@ -6,7 +6,7 @@
   "scripts": {
     "test": "test",
     "devStart": "nodemon server.js",
-    "start": "nodemon server_new.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/SachinthaSampath/wireappsintern#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3"
